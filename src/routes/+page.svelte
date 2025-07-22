@@ -20,15 +20,11 @@
       <button class="contact-btn">CONTACT US</button>
     </div>
   </div>
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="copyright">Copyright © 2025 Stayify. Privacy Policy</div>
-      <div class="eu-badge">
-        <img src="/eu-badge.svg" alt="EU Flag" class="eu-flag" />
-        <span>Co-funded by<br>the European Union</span>
-      </div>
+  <div class="footer-wrapper">
+    <div class="footer-background">
+      <img src="/footer.png" alt="Footer Background" class="footer-image" />
     </div>
-  </footer>
+  </div>
 </div>
 
 <style>
@@ -69,24 +65,46 @@
     will-change: transform;
     overflow: hidden;
     z-index: 2;
+    padding: 40px 0;
   }
 
   @media (max-width: 900px) {
     .reveal-section {
-      height: 70vh;
+      height: auto;
+      min-height: auto;
+      padding: 30px 0;
+      margin-bottom: 0;
+    }
+
+    .about {
+      margin-top: 0;
     }
     
     .cta-section {
-      padding: 30px 16px;
+      padding: 40px 16px;
     }
     
     .cta-content {
-      gap: 20px;
+      flex-direction: column;
+      align-items: center;
     }
     
     .cta-content h3 {
       font-size: 18px;
       line-height: 24px;
+      text-align: center;
+    }
+
+    .cta-container {
+      padding-bottom: 0;
+      margin: 1rem 0 0 0;
+    }
+
+    .stayify-content {
+      padding: 1rem;
+      justify-content: flex-start;
+      gap: 1rem;
+      height: auto;
     }
   }
 
@@ -124,7 +142,7 @@
     line-height: 17px;
     letter-spacing: 0.18em;
     margin-bottom: 1rem;
-    margin-top: 0;
+    margin-top: -1rem;
     text-transform: uppercase;
     width: 100%;
     text-align: center;
@@ -151,15 +169,15 @@
     font-size: 16px;
     line-height: 24px;
     color: rgba(1, 22, 39, 0.75);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.9rem;
     margin-top: 0;
     text-align: center;
     width: 100%;
     display: block;
   }
   .underline {
-    width: 90px;
-    height: 5px;
+    width: auto;
+    height: 0px;
     background: #6c3ef4;
     margin: 1rem auto 1.5rem auto;
     border-radius: 2px;
@@ -169,11 +187,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    flex: 1 0 auto;
-    margin-top: auto;
-    margin-bottom: 0;
-    padding-bottom: 2.5rem;
+    align-items: center;
+    margin-top: 1rem;
   }
   .cta {
     background: #595FDA;
@@ -230,7 +245,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 150px;
+    gap: 30px;
     flex-wrap: wrap;
     padding: 0 20px;
   }
@@ -259,50 +274,40 @@
     letter-spacing: 0.05em;
     transition: background-color 0.2s ease;
     display: inline-block;
-    margin-left: 0px;
-
+    margin: 0 auto;
     }
 
   .contact-btn:hover {
     background: #6D28D9;
   }
 
-  .footer {
+  .footer-wrapper {
     width: 100%;
-    background: #5250A2;
-    padding: 40px 20px;
-    color: #fff;
     position: relative;
     z-index: 1;
   }
 
-  .footer-content {
-    max-width: 1100px;
-    margin: 0 auto;
+  .footer-background {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
   }
 
-  .copyright {
-    font-family: 'Raleway', Arial, sans-serif;
-    font-size: 14px;
-    opacity: 0.9;
+  .footer-image {
+    width: 100%;
+    height: auto;
+    min-height: 160px;
+    display: block;
+    object-fit: cover;
   }
 
-  .eu-badge {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: 'Raleway', Arial, sans-serif;
-    font-size: 12px;
-    line-height: 1.4;
-  }
-
-  .eu-flag {
-    height: 40px;
-    width: auto;
+  @media (max-width: 900px) {
+    .footer-image {
+      min-height: 150px;
+      object-position: center;
+    }
   }
 </style>
