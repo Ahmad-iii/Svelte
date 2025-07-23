@@ -1,7 +1,37 @@
 
 
 <div class="background">
-  <div class="header-content"></div>
+  <div class="transparent-overlay">
+    <nav class="navbar">
+      <div class="nav-logo">
+        <img src="/logo.png" alt="Logo" height="40"/>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home" class="active">HOME</a></li>
+        <li><a href="#platform">PLATFORM</a></li>
+        <li><a href="#solutions">SOLUTIONS</a></li>
+        <li><a href="#agency">AGENCY</a></li>
+        <li class="dropdown">
+          <a href="#cases">CASES <span class="arrow">▼</span></a>
+          <div class="dropdown-content">
+            <a href="#hotel">HOTEL DE STERRENBERG</a>
+          </div>
+        </li>
+        <li><a href="#partners">PARTNERS</a></li>
+        <li class="dropdown">
+          <a href="#about">ABOUT <span class="arrow">▼</span></a>
+          <div class="dropdown-content">
+            <a href="#contact">CONTACT US</a>
+          </div>
+        </li>
+      </ul>
+      <button class="cta-button">SignIn/SignUp</button>
+    </nav>
+  </div>
+  <div class="header-content">
+    <div class="header-title">NEXT GENERATION BOOKING ENGINE AND DIGITAL SALES PLATFORM</div>
+    <div class="header-main-title">THE BOOKING ENGINE FOR <br>GROWTH</div>
+  </div>
   <section class="reveal-section">
     <div class="stayify-content">
       <div class="about">ABOUT STAYIFY</div>
@@ -30,6 +60,136 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 
+  .transparent-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70vh;
+    background: transparent;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: auto;
+    height: 70px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 1;
+  }
+
+  .nav-logo img {
+    height: 250px;
+    width: auto;
+    margin-top: 48px ;
+    margin-left: -18px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    margin-top: 30px;
+    padding: 0;
+    margin-left: auto;
+    margin-right: 32px;
+  }
+
+  .nav-links a {
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 70px;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .nav-links a:hover {
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 8px rgba(255,255,255,0.5);
+    cursor: pointer;
+  }
+
+  .nav-links a.active {
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 8px rgba(255,255,255,0.5);
+  }
+
+  .arrow {
+    font-size: 12px;
+    margin-left: 4px;
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    z-index: 2;
+  }
+
+  .dropdown-content a {
+    line-height: 50px;
+    padding: 0 20px;
+    display: block;
+    color: white;
+    background-color: #484698;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .cta-button {
+    background-color: #515CD5;
+    color: rgb(255, 255, 255);
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    padding: 8px 24px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 30px;
+  }
+
+  .cta-button:hover {
+    background-color: #55778F;
+    box-shadow: 0 4px 12px rgba(81, 92, 213, 0.3);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    
+    .navbar {
+      padding: 0 20px;
+    }
+  }
+
   .background {
     min-height: 200vh;
     width: 100%;
@@ -47,6 +207,33 @@
   .header-content {
     height: 100vh;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 111px;
+    gap: 210px;
+  }
+
+  .header-title {
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 17px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    letter-spacing: 0.16em;
+  }
+
+  .header-main-title {
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 84px;
+    color: rgb(255, 255, 255);
+    text-align: center;
   }
 
   .reveal-section {
@@ -64,7 +251,7 @@
     animation: slideUp 1s cubic-bezier(0.77,0,0.175,1) both;
     will-change: transform;
     overflow: hidden;
-    z-index: 2;
+    z-index: 10;
     padding: 40px 0;
   }
 
@@ -191,7 +378,7 @@
     margin-top: 1rem;
   }
   .cta {
-    background: #595FDA;
+    background: #513CDA;
     color: #fff;
     font-family: 'Raleway', Arial, sans-serif;
     font-weight: 700;
@@ -208,7 +395,7 @@
     display: block;
   }
   .cta:hover {
-    background: #4b2bbd;
+    background: #6EC1E482;
   }
 
   .second-background {
@@ -219,7 +406,7 @@
     top: 0;
     left: 0;
     right: 0;
-    z-index: 0;
+    z-index: 10;
     margin: 0;
     padding: 0;
     transform: translateZ(0);
@@ -278,7 +465,7 @@
     }
 
   .contact-btn:hover {
-    background: #6D28D9;
+    background: #6EC1E482;
   }
 
   .footer-wrapper {
