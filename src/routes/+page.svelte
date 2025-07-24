@@ -78,7 +78,44 @@
     </div>
   </section>
 
-<div class="second-background"></div>
+<div class="second-background">
+  <div class="news-section">
+    <div class="section-header">
+      <div class="section-subtitle">NEWS & BLOG</div>
+      <h2 class="section-title">What's New at Stayify</h2>
+    </div>
+    
+    <div class="articles-grid">
+      <article class="article-card">
+        <img src="image1.png" 
+             alt="Hotel Website Design" 
+             class="article-image">
+        <div class="article-content">
+          <h3 class="article-title">A New Look, A Stronger Solution: Stayify's Updated Website for Hotel Success</h3>
+          <div class="article-meta">
+            <div class="date-icon"></div>
+            <span class="article-date">June 18, 2025</span>
+          </div>
+          <p class="article-description">We're excited to unveil the all-new Stayify.com — redesigned with you in mind. Whether you're managing a single hotel or running a growing chain, we know the challenges you face.</p>
+        </div>
+      </article>
+      
+      <article class="article-card">
+        <img src="image2.png" 
+             alt="Hotel Booking Systems" 
+             class="article-image">
+        <div class="article-content">
+          <h3 class="article-title">The Delusion of Multiple Booking Engines and a Single Brand</h3>
+          <div class="article-meta">
+            <div class="date-icon"></div>
+            <span class="article-date">June 11, 2024</span>
+          </div>
+          <p class="article-description">The hospitality industry has a long history of building sales processes in silos, dating back to when airlines, accommodations, and rental cars were first linked through global data networks (GDS)...</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
   <div class="cta-section">
     <div class="cta-content">
       <h3>Want to hear more about Stayify? Reach out to our team.</h3>
@@ -95,6 +132,11 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 
+  /*********************************************
+   * SHARED STYLES (Both Desktop and Mobile)
+   *********************************************/
+
+  /* Overlay for header section */
   .transparent-overlay {
     position: fixed;
     top: 0;
@@ -215,9 +257,14 @@
     transform: translateY(-1px);
   }
 
-  /* Mobile Menu Styles */
+  /*********************************************
+   * MOBILE-SPECIFIC COMPONENTS
+   * These are only visible on mobile devices
+   *********************************************/
+  
+  /* Mobile Menu Button */
   .hamburger-menu {
-    display: none;
+    display: none; /* Hidden by default, shown in mobile media query */
     flex-direction: column;
     justify-content: space-between;
     width: 40px;
@@ -261,7 +308,8 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background: white;
+    background: rgba(81, 92, 213, 0.95);
+    backdrop-filter: blur(10px);
     padding: 20px;
     z-index: 1000;
     opacity: 0;
@@ -304,13 +352,14 @@
   .mobile-nav-links a {
     font-family: 'Raleway', sans-serif;
     font-size: 20px;
-    color: #333;
+    color: white;
     text-decoration: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 0;
     transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .mobile-nav-links .dropdown-content {
@@ -353,37 +402,55 @@
     cursor: pointer;
   }
 
-  /* Desktop Styles (min-width: 769px) */
-  /* These styles will override the base styles for desktop view only */
+  /*********************************************
+   * DESKTOP-SPECIFIC STYLES (min-width: 769px)
+   * These styles override the base styles for desktop view
+   *********************************************/
+  /* Moved and enhanced desktop styles */
   @media (min-width: 769px) {
-    /* Header Section Text Styles - Desktop */
-    .header-title {
-      font-size: 16px;
-      line-height: 24px;
+    /* Header Text Styles - Desktop Only */
+    
+    /* "NEXT GENERATION BOOKING ENGINE..." */
+    .background .header-content .header-title {
+      font-size: 17px !important;  /* Using !important to override base styles */
+      line-height: 25px;
       letter-spacing: 0.16em;
+      margin-bottom: 20px;
+      padding-top: 40px;
     }
 
-    .header-main-title {
-      font-size: 48px;
-      line-height: 64px;
+    /* "THE BOOKING ENGINE FOR GROWTH" */
+    .background .header-content .header-main-title {
+      font-size: 49px;
+      line-height: 65px;
       margin-top: 40px;
+      margin-bottom: 30px;
+      padding: 0 20px;
     }
 
-    .header-description {
-      font-size: 22px;
-      line-height: 36px;
+    /* "Stayify helps boutique hotels..." */
+    .background .header-content .header-description {
+      font-size: 23px;
+      line-height: 37px;
       max-width: 996px;
+      margin: 0 auto 40px;
+      padding: 0 30px;
     }
 
-    .header-cta {
-      font-size: 18px;
-      padding: 20px 40px;
+    /* "SPEAK TO EXPERT" button */
+    .background .header-content .header-cta {
+      font-size: 19px;
+      padding: 21px 41px;
+      margin-top: 40px;
     }
   }
 
-  /* Mobile Styles (max-width: 768px) */
+  /*********************************************
+   * MOBILE-SPECIFIC STYLES (max-width: 768px)
+   * These styles override the base styles for mobile view
+   *********************************************/
   @media (max-width: 768px) {
-    /* Navigation Elements - Mobile */
+    /* Navigation Elements - Mobile Only */
     .nav-links, .cta-button {
       display: none;
     }
@@ -392,10 +459,13 @@
       padding: 15px 20px;
       justify-content: space-between;
       height: 60px;
+      background: rgba(81, 92, 213, 0.1);
+      backdrop-filter: blur(10px);
     }
 
     .hamburger-menu {
       display: flex;
+      z-index: 1002;
     }
 
     .nav-logo img {
@@ -471,6 +541,13 @@
     }
   }
 
+  /*********************************************
+   * BASE STYLES (Mobile First Approach)
+   * These styles apply to all screen sizes unless
+   * overridden by media queries
+   *********************************************/
+
+  /* Main Background */
   .background {
     min-height: 200vh;
     width: 100%;
@@ -485,7 +562,7 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Base Header Styles (Mobile First) */
+  /* Base Header Styles */
   /* These styles serve as the foundation and will be overridden by desktop styles where needed */
   
   /* Header Container */
@@ -723,20 +800,204 @@
     background: #6EC1E482;
   }
 
+  /* Second Background Section with News */
   .second-background {
     width: 100%;
     height: 100vh;
     background: url('/second_Background.png') center/cover no-repeat;
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
     z-index: 10;
-    margin: 0;
-    padding: 0;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    will-change: transform;
+  }
+
+  /* News Section Styles */
+  .news-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 12;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-subtitle {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: rgb(0, 0, 0);
+    line-height: 1.2;
+    position: relative;
+    text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #8b5cf6, #a855f7);
+    border-radius: 2px;
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 20px;
+  }
+
+  .article-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .article-image {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .article-card:hover .article-image {
+    transform: scale(1.05);
+  }
+
+  .article-content {
+    padding: 32px;
+  }
+
+  .article-title {
+    font-family: 'Raleway', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: rgb(0, 0, 0);
+    line-height: 1.3;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .date-icon {
+    width: 16px;
+    height: 16px;
+    background: linear-gradient(45deg, #8b5cf6, #a855f7);
+    border-radius: 3px;
+    margin-right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .date-icon::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 1px;
+  }
+
+  .article-date {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    color: #8b5cf6;
+    font-weight: 600;
+  }
+
+  .article-description {
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.9);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    
+  }
+
+  /* Mobile styles for news section */
+  @media (max-width: 768px) {
+    .second-background {
+      padding: 40px 16px;
+      height: auto;
+      min-height: 100vh;
+    }
+
+    .articles-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .section-title {
+      font-size: 28px;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+    }
+
+    .article-card {
+      border-radius: 12px;
+    }
+
+    .article-image {
+      height: 160px;
+    }
+
+    .article-content {
+      padding: 20px;
+    }
+
+    .article-title {
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+
+    .article-description {
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+    }
   }
 
   .cta-section {
@@ -832,7 +1093,10 @@
     mobileMenuOpen = !mobileMenuOpen;
     document.querySelector('.hamburger-menu')?.classList.toggle('active');
     
-    if (!mobileMenuOpen) {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
       activeDropdown = null;
       document.querySelectorAll('.mobile-nav-links .dropdown')
         .forEach(dropdown => dropdown.classList.remove('active'));
@@ -842,6 +1106,7 @@
   function closeMobileMenu(): void {
     mobileMenuOpen = false;
     document.querySelector('.hamburger-menu')?.classList.remove('active');
+    document.body.style.overflow = '';
     activeDropdown = null;
     document.querySelectorAll('.mobile-nav-links .dropdown')
       .forEach(dropdown => dropdown.classList.remove('active'));
