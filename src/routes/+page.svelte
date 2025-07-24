@@ -353,7 +353,10 @@
     cursor: pointer;
   }
 
+  /* Desktop Styles (min-width: 769px) */
+  /* These styles will override the base styles for desktop view only */
   @media (min-width: 769px) {
+    /* Header Section Text Styles - Desktop */
     .header-title {
       font-size: 16px;
       line-height: 24px;
@@ -378,7 +381,9 @@
     }
   }
 
+  /* Mobile Styles (max-width: 768px) */
   @media (max-width: 768px) {
+    /* Navigation Elements - Mobile */
     .nav-links, .cta-button {
       display: none;
     }
@@ -480,6 +485,10 @@
     -webkit-overflow-scrolling: touch;
   }
 
+  /* Base Header Styles (Mobile First) */
+  /* These styles serve as the foundation and will be overridden by desktop styles where needed */
+  
+  /* Header Container */
   .header-content {
     height: 100vh;
     width: 100%;
@@ -491,6 +500,7 @@
     gap: 32px;
   }
 
+  /* Main Title Text */
   .header-title {
     font-family: 'Raleway', sans-serif;
     font-style: normal;
@@ -502,6 +512,7 @@
     letter-spacing: 0.16em;
   }
 
+  /* Large Title Text */
   .header-main-title {
     font-family: 'Raleway', sans-serif;
     font-style: normal;
@@ -515,6 +526,7 @@
     padding-bottom: 21px;
   }
 
+  /* Description Text */
   .header-description {
     font-family: 'Raleway', sans-serif;
     font-style: normal;
@@ -528,6 +540,7 @@
     margin: -39px auto;
   }
 
+  /* Call to Action Button */
   .header-cta {
     font-family: 'Raleway', sans-serif;
     font-style: normal;
