@@ -6,6 +6,39 @@
       <div class="nav-logo">
         <img src="/logo.png" alt="Logo" height="40"/>
       </div>
+      <button 
+        class="hamburger-menu" 
+        class:active={mobileMenuOpen} 
+        aria-label="Menu" 
+        on:click={toggleMobileMenu}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="mobile-menu" class:active={mobileMenuOpen}>
+        <button class="close-menu" aria-label="Close menu" on:click={closeMobileMenu}>×</button>
+        <ul class="mobile-nav-links">
+          <li><a href="#home" class="active">HOME</a></li>
+          <li><a href="#platform">PLATFORM</a></li>
+          <li><a href="#solutions">SOLUTIONS</a></li>
+          <li><a href="#agency">AGENCY</a></li>
+          <li class="dropdown" class:active={activeDropdown === 0}>
+            <a href="#cases" on:click={(e) => handleDropdownClick(e, 0)}>CASES <span class="arrow">▼</span></a>
+            <div class="dropdown-content" class:active={activeDropdown === 0}>
+              <a href="#hotel">HOTEL DE STERRENBERG</a>
+            </div>
+          </li>
+          <li><a href="#partners">PARTNERS</a></li>
+          <li class="dropdown" class:active={activeDropdown === 1}>
+            <a href="#about" on:click={(e) => handleDropdownClick(e, 1)}>ABOUT <span class="arrow">▼</span></a>
+            <div class="dropdown-content" class:active={activeDropdown === 1}>
+              <a href="#contact">CONTACT US</a>
+            </div>
+          </li>
+        </ul>
+        <button class="mobile-cta">BOOK A MEETING</button>
+      </div>
       <ul class="nav-links">
         <li><a href="#home" class="active">HOME</a></li>
         <li><a href="#platform">PLATFORM</a></li>
@@ -31,11 +64,13 @@
   <div class="header-content">
     <div class="header-title">NEXT GENERATION BOOKING ENGINE AND DIGITAL SALES PLATFORM</div>
     <div class="header-main-title">THE BOOKING ENGINE FOR <br>GROWTH</div>
+    <div class="header-description">Stayify helps boutique hotels, hotel chains, resorts and travel brands to boost direct<br>bookings - driving sales, increasing profits, and enhancing the customer experience.</div>
+    <button class="header-cta">SPEAK TO EXPERT</button>
   </div>
   <section class="reveal-section">
     <div class="stayify-content">
       <div class="about">ABOUT STAYIFY</div>
-      <h1>Stayify is the all-in-one booking engine built<br>for modern hospitality.<div class="underline"></div></h1>
+      <h1>Stayify is the all-in-one booking engine<br> built  for modern hospitality.<div class="underline"></div></h1>
       <p class="desc">From accommodation and spa treatments to dining, activities, and rentals—Stayify lets your guests book everything in one seamless flow. Fully customizable and deeply integrated with your existing systems, Stayify helps you increase direct bookings, reduce manual work, and deliver a frictionless guest experience—all under your brand.</p>
       <h2>Create a consistent brand experience<br>throughout the booking journey<div class="underline"></div></h2>
       <p class="desc">With Stayify, your booking engine feels like a natural part of your website, not a separate tool. Guests stay within your branded environment from start to finish, whether they’re booking a room, a spa treatment, or a dinner table. It’s one smooth, on-brand experience that builds trust and drives more direct bookings.</p>
@@ -180,13 +215,254 @@
     transform: translateY(-1px);
   }
 
+  /* Mobile Menu Styles */
+  .hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40px;
+    background: #515CD5;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 12px;
+    position: fixed;
+    top: 25px;
+    right: 20px;
+    z-index: 1001;
+  }
+
+  .hamburger-menu span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+    margin: 2px 0;
+    transform-origin: center;
+  }
+
+  .hamburger-menu.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-menu.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: white;
+    padding: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .mobile-menu.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .close-menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 32px;
+    background: none;
+    border: none;
+    color: #515CD5;
+    cursor: pointer;
+  }
+
+  .mobile-nav-links {
+    margin-top: 80px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .mobile-nav-links li {
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-nav-links li:first-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-nav-links a {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-nav-links .dropdown-content {
+    display: none;
+    background: #f8f8f8;
+    padding-left: 20px;
+  }
+
+  .mobile-nav-links .dropdown-content.active {
+    display: block;
+  }
+
+  .mobile-nav-links .dropdown-content a {
+    font-size: 18px;
+    padding: 15px 0;
+    color: #666;
+  }
+
+  .mobile-nav-links .arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-nav-links .dropdown.active .arrow {
+    transform: rotate(180deg);
+  }
+
+  .mobile-cta {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #515CD5;
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  @media (min-width: 769px) {
+    .header-title {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.16em;
+    }
+
+    .header-main-title {
+      font-size: 48px;
+      line-height: 64px;
+      margin-top: 40px;
+    }
+
+    .header-description {
+      font-size: 22px;
+      line-height: 36px;
+      max-width: 996px;
+    }
+
+    .header-cta {
+      font-size: 18px;
+      padding: 20px 40px;
+    }
+  }
+
   @media (max-width: 768px) {
-    .nav-links {
+    .nav-links, .cta-button {
       display: none;
     }
     
     .navbar {
-      padding: 0 20px;
+      padding: 15px 20px;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .hamburger-menu {
+      display: flex;
+    }
+
+    .nav-logo img {
+      height: 180px;
+      margin: 0;
+      width: auto;
+      position: fixed;
+      top: -35px;
+      left: 12px;
+    }
+
+    .header-content {
+      padding: 0;
+      height: auto;
+      min-height: 100vh;
+      justify-content: flex-start;
+    }
+
+    .header-content > * {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .header-title {
+      font-size: 14px;
+      line-height: 1.4;
+      margin-top: 51px;
+      letter-spacing: 0.12em;
+      max-width: 335px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .header-main-title {
+      font-size: 36px;
+      line-height: 48px;
+      margin-top: 50px;
+      text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+      max-width: 335px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      padding-left: 24px;
+      padding-right: 24px;
+      br {
+        display: none;
+      }
+    }
+
+    .header-description {
+      font-size: 18px;
+      line-height: 24px;
+      margin-top: 24px;
+      text-align: center;
+      max-width: 335px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 24px;
+      padding-right: 24px;
+      br {
+        display: none;
+      }
+    }
+
+    .header-cta {
+      margin-top: 32px;
+      padding: 16px 32px;
+      font-size: 16px;
+      min-width: 200px;
+      text-align: center;
+      display: inline-block;
     }
   }
 
@@ -212,14 +488,14 @@
     justify-content: flex-start;
     align-items: center;
     padding-top: 111px;
-    gap: 210px;
+    gap: 32px;
   }
 
   .header-title {
     font-family: 'Raleway', sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 12px;
     line-height: 17px;
     color: rgb(255, 255, 255);
     text-align: center;
@@ -230,10 +506,46 @@
     font-family: 'Raleway', sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 60px;
-    line-height: 84px;
+    font-size: 33px;
+    line-height: 54px;
     color: rgb(255, 255, 255);
     text-align: center;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.97);
+    margin-top: 69px;
+    padding-bottom: 21px;
+  }
+
+  .header-description {
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 30px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.97);
+    max-width: 996px;
+    margin: -39px auto;
+  }
+
+  .header-cta {
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 15px;
+    color: rgb(255, 255, 255);
+    background-color: #515CD5;
+    padding: 16px 32px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 32px;
+  }
+
+  .header-cta:hover {
+    background-color: transparent;
+    color: rgb(255, 255, 255);
   }
 
   .reveal-section {
@@ -498,3 +810,45 @@
     }
   }
 </style>
+
+<script lang="ts">
+  let mobileMenuOpen = false;
+  let activeDropdown: number | null = null;
+
+  function toggleMobileMenu(): void {
+    mobileMenuOpen = !mobileMenuOpen;
+    document.querySelector('.hamburger-menu')?.classList.toggle('active');
+    
+    if (!mobileMenuOpen) {
+      activeDropdown = null;
+      document.querySelectorAll('.mobile-nav-links .dropdown')
+        .forEach(dropdown => dropdown.classList.remove('active'));
+    }
+  }
+
+  function closeMobileMenu(): void {
+    mobileMenuOpen = false;
+    document.querySelector('.hamburger-menu')?.classList.remove('active');
+    activeDropdown = null;
+    document.querySelectorAll('.mobile-nav-links .dropdown')
+      .forEach(dropdown => dropdown.classList.remove('active'));
+  }
+
+  function handleDropdownClick(event: MouseEvent, dropdownIndex: number): void {
+    event.preventDefault();
+    const dropdowns = document.querySelectorAll('.mobile-nav-links .dropdown');
+    if (activeDropdown === dropdownIndex) {
+      dropdowns[dropdownIndex].classList.remove('active');
+      activeDropdown = null;
+    } else {
+      dropdowns.forEach((dropdown, index) => {
+        if (index === dropdownIndex) {
+          dropdown.classList.add('active');
+        } else {
+          dropdown.classList.remove('active');
+        }
+      });
+      activeDropdown = dropdownIndex;
+    }
+  }
+</script>
