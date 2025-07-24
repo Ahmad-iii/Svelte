@@ -79,6 +79,58 @@
         <h2>{isSignUp ? 'Sign Up' : 'Sign In'}</h2>
         
         <form on:submit|preventDefault={handleSubmit}>
+          {#if isSignUp}
+            <!-- Phone Number (Only shown for Sign Up) -->
+            <div class="form-group phone-group">
+              <div class="country-select">
+                <div 
+                  class="selected-country" 
+                  role="button" 
+                  tabindex="0"
+                  on:click={() => isCountryDropdownOpen = !isCountryDropdownOpen}
+                  on:keydown={e => e.key === 'Enter' && (isCountryDropdownOpen = !isCountryDropdownOpen)}
+                >
+                  <span class="flag">{selectedCountry === 'US' ? '🇺🇸' : '🇨🇦'}</span>
+                  <span class="country-code">+1</span>
+                  <span class="arrow-down">▼</span>
+                </div>
+                {#if isCountryDropdownOpen}
+                  <div class="country-dropdown" transition:slide>
+                    <button 
+                      class="country-option" 
+                      class:active={selectedCountry === 'US'} 
+                      on:click={() => selectCountry('US')}
+                      type="button"
+                    >
+                      <span class="flag">🇺🇸</span>
+                      <span>United States</span>
+                    </button>
+                    <button 
+                      class="country-option" 
+                      class:active={selectedCountry === 'CA'} 
+                      on:click={() => selectCountry('CA')}
+                      type="button"
+                    >
+                      <span class="flag">🇨🇦</span>
+                      <span>Canada</span>
+                    </button>
+                  </div>
+                {/if}
+              </div>
+              <input
+                type="tel"
+                bind:value={phone}
+                class:error={phoneError}
+                placeholder={selectedCountry === 'US' ? '(212) 555-0123' : '(416) 555-0123'}
+                on:input={formatPhoneNumber}
+                aria-label="Phone number"
+              />
+              {#if phoneError}
+                <span class="error-message">Please enter a valid {selectedCountry === 'US' ? 'US' : 'Canadian'} phone number</span>
+              {/if}
+            </div>
+          {/if}
+
           <div class="form-group">
             <input 
               type="email" 
@@ -111,6 +163,29 @@
               <span class="error-message">Password is required</span>
             {/if}
           </div>
+
+          {#if isSignUp}
+            <!-- Confirm Password (Only shown for Sign Up) -->
+            <div class="form-group password-group">
+              <input 
+                type={showConfirmPassword ? 'text' : 'password'}
+                placeholder="Confirm Password"
+                bind:value={confirmPassword}
+                class:error={confirmPasswordError}
+                on:focus={() => confirmPasswordError = false}
+              />
+              <button 
+                type="button" 
+                class="toggle-password"
+                on:click={() => showConfirmPassword = !showConfirmPassword}
+              >
+                {showConfirmPassword ? '👁️' : '👁️‍🗨️'}
+              </button>
+              {#if confirmPasswordError}
+                <span class="error-message">Passwords do not match</span>
+              {/if}
+            </div>
+          {/if}
           
           <button type="submit" class="submit-btn">
             {isSignUp ? 'Sign Up' : 'Sign In'}
@@ -1232,7 +1307,7 @@
   }
 
   .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     position: relative;
   }
 
@@ -1245,6 +1320,89 @@
     font-size: 16px;
     transition: border-color 0.2s ease;
   }
+
+  .phone-group {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .country-select {
+    position: relative;
+    width: 100%;
+  }
+
+  .selected-country {
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    border: 2px solid rgba(1, 22, 39, 0.1);
+    border-radius: 8px;
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: white;
+    transition: border-color 0.2s ease;
+  }
+
+  .selected-country:hover,
+  .selected-country:focus {
+    outline: none;
+    border-color: #515CD5;
+  }
+
+  .country-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 2px solid rgba(1, 22, 39, 0.1);
+    border-radius: 8px;
+    margin-top: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+
+  .country-option {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s ease;
+  }
+
+  .country-option:hover {
+    background-color: rgba(81, 92, 213, 0.1);
+  }
+
+  .country-option.active {
+    background-color: rgba(81, 92, 213, 0.1);
+    color: #515CD5;
+  }
+
+  .flag {
+    font-size: 1.25rem;
+  }
+
+  .country-code {
+    color: rgba(1, 22, 39, 0.5);
+  }
+
+  .arrow-down {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: rgba(1, 22, 39, 0.5);
+  }
+
+  /* No input hint needed for the new phone input */
 
   .form-group input:focus {
     outline: none;
@@ -1335,6 +1493,8 @@
 </style>
 
 <script lang="ts">
+  import { slide } from 'svelte/transition';
+
   // Mobile menu state
   let mobileMenuOpen = false;
   let activeDropdown: number | null = null;
@@ -1342,11 +1502,65 @@
   // Modal state
   let isModalOpen = false;
   let isSignUp = true;
+  let phone = '';
   let email = '';
   let password = '';
+  let confirmPassword = '';
+  let phoneError = false;
   let emailError = false;
+  let isCountryDropdownOpen = false;
+  let selectedCountry: 'US' | 'CA' = 'US';
+
+  // US and Canadian area codes
+  const areaCodes = {
+    US: ['212', '310', '305', '702', '415'],
+    CA: ['416', '604', '438', '587', '506']
+  };
+
+  function selectCountry(country: 'US' | 'CA'): void {
+    selectedCountry = country;
+    isCountryDropdownOpen = false;
+  }
+
+  function formatPhoneNumber(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, '');
+    
+    if (value.length > 10) {
+      value = value.slice(0, 10);
+    }
+    
+    if (value.length === 0) {
+      phone = '';
+    } else if (value.length <= 3) {
+      phone = `(${value}`;
+    } else if (value.length <= 6) {
+      phone = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    } else {
+      phone = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
+    }
+  }
+
+  function validatePhoneNumber(inputPhone: string): boolean {
+    // Remove all non-digit characters
+    const stripped = inputPhone.replace(/\D/g, '');
+    
+    // Check if we have exactly 10 digits
+    if (stripped.length !== 10) {
+      return false;
+    }
+    
+    // Extract area code
+    const areaCode = stripped.slice(0, 3);
+    
+    // Check if area code matches selected country
+    const validAreaCodes = selectedCountry === 'US' ? areaCodes.US : areaCodes.CA;
+    return validAreaCodes.includes(areaCode);
+  }
   let passwordError = false;
+  let confirmPasswordError = false;
   let showPassword = false;
+  let showConfirmPassword = false;
 
   import { goto } from '$app/navigation';
 
@@ -1360,28 +1574,59 @@
     isModalOpen = false;
     document.body.style.overflow = '';
     // Reset form
+    phone = '';
     email = '';
     password = '';
+    confirmPassword = '';
+    phoneError = false;
     emailError = false;
     passwordError = false;
+    confirmPasswordError = false;
     showPassword = false;
+    showConfirmPassword = false;
   }
 
   function handleSubmit(): void {
     // Reset errors
+    phoneError = false;
     emailError = false;
     passwordError = false;
+    confirmPasswordError = false;
 
-    // Simple validation
+    let hasErrors = false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      emailError = true;
-    }
-    if (!password) {
-      passwordError = true;
+
+    if (isSignUp) {
+      // Sign Up validation
+      if (!phone || !validatePhoneNumber(phone)) {
+        phoneError = true;
+        hasErrors = true;
+      }
+      if (!emailRegex.test(email)) {
+        emailError = true;
+        hasErrors = true;
+      }
+      if (!password) {
+        passwordError = true;
+        hasErrors = true;
+      }
+      if (password !== confirmPassword) {
+        confirmPasswordError = true;
+        hasErrors = true;
+      }
+    } else {
+      // Sign In validation
+      if (!emailRegex.test(email)) {
+        emailError = true;
+        hasErrors = true;
+      }
+      if (!password) {
+        passwordError = true;
+        hasErrors = true;
+      }
     }
 
-    if (!emailError && !passwordError) {
+    if (!hasErrors) {
       // Navigate to appropriate response page
       if (isSignUp) {
         goto('/sign-up');

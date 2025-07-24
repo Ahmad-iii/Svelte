@@ -16,7 +16,19 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-color: #f8f9fa;
+    background: linear-gradient(135deg, #eceff1 0%, #cfd8dc 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .response-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(to right, #90a4ae, #607d8b);
   }
 
   .response-content {
@@ -26,28 +38,48 @@
     padding: 3rem;
     border-radius: 16px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(96, 125, 139, 0.15);
+    border: 1px solid rgba(96, 125, 139, 0.1);
+    position: relative;
+  }
+
+  .response-content::before {
+    content: '🔒';
+    font-size: 48px;
+    display: block;
+    margin-bottom: 1.5rem;
+    animation: shake 5s infinite;
+    opacity: 0.7;
   }
 
   h1 {
     font-family: 'Raleway', Arial, sans-serif;
     font-weight: 700;
     font-size: 32px;
-    color: rgb(1, 22, 39);
+    color: #455a64;
     margin-bottom: 1.5rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
   .message {
     font-family: 'Raleway', Arial, sans-serif;
     font-size: 18px;
     line-height: 1.6;
-    color: rgba(1, 22, 39, 0.8);
+    color: #546e7a;
     margin-bottom: 2rem;
+  }
+
+  @keyframes shake {
+    0%, 90%, 100% { transform: rotate(0); }
+    92% { transform: rotate(-10deg); }
+    94% { transform: rotate(10deg); }
+    96% { transform: rotate(-10deg); }
+    98% { transform: rotate(10deg); }
   }
 
   .back-button {
     display: inline-block;
-    background: #515CD5;
+    background: linear-gradient(135deg, #90a4ae 0%, #607d8b 100%);
     color: white;
     font-family: 'Raleway', Arial, sans-serif;
     font-weight: 700;
@@ -55,11 +87,16 @@
     padding: 12px 32px;
     border-radius: 30px;
     text-decoration: none;
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(96, 125, 139, 0.2);
   }
 
   .back-button:hover {
-    background: #6EC1E4;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(96, 125, 139, 0.3);
+    background: linear-gradient(135deg, #78909c 0%, #546e7a 100%);
   }
 
   @media (max-width: 480px) {
