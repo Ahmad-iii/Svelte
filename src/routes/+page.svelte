@@ -458,7 +458,7 @@
     .navbar {
       padding: 15px 20px;
       justify-content: space-between;
-      height: 60px;
+      height: 90px;
       background: rgba(81, 92, 213, 0.1);
       backdrop-filter: blur(10px);
     }
