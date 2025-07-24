@@ -54,18 +54,91 @@
         <li class="dropdown">
           <a href="#about">ABOUT <span class="arrow">▼</span></a>
           <div class="dropdown-content">
-            <a href="#contact">CONTACT US</a>
+            <a href="#contact-us">CONTACT US</a>
           </div>
         </li>
       </ul>
-      <button class="cta-button">SignIn/SignUp</button>
+      <button class="cta-button" on:click={openModal}>SignIn/SignUp</button>
     </nav>
   </div>
+
+  <!-- Auth Modal -->
+  <div class="auth-modal" class:active={isModalOpen}>
+    <div 
+      class="modal-overlay" 
+      role="button"
+      tabindex="0"
+      on:click={closeModal}
+      on:keydown={e => e.key === 'Enter' && closeModal()}
+      aria-label="Close modal"
+    ></div>
+    <div class="modal-content">
+      <button class="close-modal" on:click={closeModal}>×</button>
+      
+      <div class="auth-form">
+        <h2>{isSignUp ? 'Sign Up' : 'Sign In'}</h2>
+        
+        <form on:submit|preventDefault={handleSubmit}>
+          <div class="form-group">
+            <input 
+              type="email" 
+              placeholder="Email"
+              bind:value={email}
+              class:error={emailError}
+              on:focus={() => emailError = false}
+            />
+            {#if emailError}
+              <span class="error-message">Please enter a valid email</span>
+            {/if}
+          </div>
+          
+          <div class="form-group password-group">
+            <input 
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              bind:value={password}
+              class:error={passwordError}
+              on:focus={() => passwordError = false}
+            />
+            <button 
+              type="button" 
+              class="toggle-password"
+              on:click={() => showPassword = !showPassword}
+            >
+              {showPassword ? '👁️' : '👁️‍🗨️'}
+            </button>
+            {#if passwordError}
+              <span class="error-message">Password is required</span>
+            {/if}
+          </div>
+          
+          <button type="submit" class="submit-btn">
+            {isSignUp ? 'Sign Up' : 'Sign In'}
+          </button>
+        </form>
+        
+        <p class="toggle-mode">
+          {#if isSignUp}
+            Already have an account? 
+            <button class="toggle-link" on:click={() => isSignUp = false}>
+              Sign In
+            </button>
+          {:else}
+            Don't have an account? 
+            <button class="toggle-link" on:click={() => isSignUp = true}>
+              Sign Up
+            </button>
+          {/if}
+        </p>
+      </div>
+    </div>
+  </div>
+
   <div class="header-content">
     <div class="header-title">NEXT GENERATION BOOKING ENGINE AND DIGITAL SALES PLATFORM</div>
     <div class="header-main-title">THE BOOKING ENGINE FOR <br>GROWTH</div>
     <div class="header-description">Stayify helps boutique hotels, hotel chains, resorts and travel brands to boost direct<br>bookings - driving sales, increasing profits, and enhancing the customer experience.</div>
-    <button class="header-cta">SPEAK TO EXPERT</button>
+    <button class="header-cta" on:click={openModal}>SPEAK TO EXPERT</button>
   </div>
   <section class="reveal-section">
     <div class="stayify-content">
@@ -74,7 +147,7 @@
       <p class="desc">From accommodation and spa treatments to dining, activities, and rentals—Stayify lets your guests book everything in one seamless flow. Fully customizable and deeply integrated with your existing systems, Stayify helps you increase direct bookings, reduce manual work, and deliver a frictionless guest experience—all under your brand.</p>
       <h2>Create a consistent brand experience<br>throughout the booking journey<div class="underline"></div></h2>
       <p class="desc">With Stayify, your booking engine feels like a natural part of your website, not a separate tool. Guests stay within your branded environment from start to finish, whether they’re booking a room, a spa treatment, or a dinner table. It’s one smooth, on-brand experience that builds trust and drives more direct bookings.</p>
-      <div class="cta-container"><button class="cta">TALK TO US</button></div>
+      <div class="cta-container"><button class="cta" on:click={openModal}>TALK TO US</button></div>
     </div>
   </section>
 
@@ -119,7 +192,7 @@
   <div class="cta-section">
     <div class="cta-content">
       <h3>Want to hear more about Stayify? Reach out to our team.</h3>
-      <button class="contact-btn">CONTACT US</button>
+      <button class="contact-btn" on:click={openModal}>CONTACT US</button>
     </div>
   </div>
   <div class="footer-wrapper">
@@ -1083,12 +1156,243 @@
       object-position: center;
     }
   }
+
+  /* Modal Styles */
+  .auth-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+  }
+
+  .auth-modal.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    z-index: 1001;
+  }
+
+  .auth-modal.active .modal-content {
+    transform: translateY(0);
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: rgba(1, 22, 39, 0.5);
+    cursor: pointer;
+    padding: 0.5rem;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+
+  .close-modal:hover {
+    color: rgba(1, 22, 39, 0.8);
+  }
+
+  .auth-form h2 {
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: rgb(1, 22, 39);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid rgba(1, 22, 39, 0.1);
+    border-radius: 8px;
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 16px;
+    transition: border-color 0.2s ease;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: #515CD5;
+  }
+
+  .form-group input.error {
+    border-color: #ff4444;
+  }
+
+  .error-message {
+    color: #ff4444;
+    font-size: 12px;
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  .password-group {
+    position: relative;
+  }
+
+  .toggle-password {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 16px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: #515CD5;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Raleway', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 1rem;
+  }
+
+  .submit-btn:hover {
+    background: #6EC1E4;
+  }
+
+  .toggle-mode {
+    text-align: center;
+    margin-top: 1rem;
+    font-family: 'Raleway', Arial, sans-serif;
+    color: rgba(1, 22, 39, 0.7);
+  }
+
+  .toggle-link {
+    background: none;
+    border: none;
+    color: #515CD5;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 0.25rem;
+    transition: color 0.2s ease;
+  }
+
+  .toggle-link:hover {
+    color: #6EC1E4;
+  }
+
+  @media (max-width: 480px) {
+    .modal-content {
+      padding: 1.5rem;
+    }
+
+    .auth-form h2 {
+      font-size: 20px;
+    }
+
+    .form-group input {
+      font-size: 14px;
+    }
+  }
 </style>
 
 <script lang="ts">
+  // Mobile menu state
   let mobileMenuOpen = false;
   let activeDropdown: number | null = null;
 
+  // Modal state
+  let isModalOpen = false;
+  let isSignUp = true;
+  let email = '';
+  let password = '';
+  let emailError = false;
+  let passwordError = false;
+  let showPassword = false;
+
+  import { goto } from '$app/navigation';
+
+  // Modal functions
+  function openModal(): void {
+    isModalOpen = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(): void {
+    isModalOpen = false;
+    document.body.style.overflow = '';
+    // Reset form
+    email = '';
+    password = '';
+    emailError = false;
+    passwordError = false;
+    showPassword = false;
+  }
+
+  function handleSubmit(): void {
+    // Reset errors
+    emailError = false;
+    passwordError = false;
+
+    // Simple validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      emailError = true;
+    }
+    if (!password) {
+      passwordError = true;
+    }
+
+    if (!emailError && !passwordError) {
+      // Navigate to appropriate response page
+      if (isSignUp) {
+        goto('/sign-up');
+      } else {
+        goto('/sign-in');
+      }
+      closeModal();
+    }
+  }
+
+  // Mobile menu functions
   function toggleMobileMenu(): void {
     mobileMenuOpen = !mobileMenuOpen;
     document.querySelector('.hamburger-menu')?.classList.toggle('active');
